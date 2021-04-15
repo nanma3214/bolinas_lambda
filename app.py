@@ -15,10 +15,15 @@ def handler(event, context):
         home_dir = os.getcwd()
         
         write_path = '/tmp'
-        vphh = 1.5
-        visitor_cnts = 300
+        
+        vphh = float(event["vphh"])
+        visitor_cnts = int(event["visitor_cnts"])
 
-        player_origin, player_destin, start_time, end_time = (143, 193, 100, 900)
+        player_origin = int(event["player_origin"])
+        player_destin = int(event["player_destin"])
+        start_time = int(event["start_time"])
+        end_time = int(event["end_time"])
+
 
         run_traffic_simulation.run_traffic_simulation(vphh=vphh, visitor_cnts=visitor_cnts, write_path=write_path)
         
@@ -28,13 +33,17 @@ def handler(event, context):
                                              read_path=write_path)
 
         bucket_name = "bolinas"
-        file_name = "my_test_file.csv"
-        lambda_path = "/tmp/" + file_name
-        s3_path = "output/" + file_name
-        os.system('echo testing... >'+lambda_path)
+        file_name = 'player_nodes_{}_{}_{}_{}_{}_{}.json'.format(vphh, visitor_cnts, player_origin, player_destin, start_time, end_time)
+        lambda_path = write_path + '/' + file_name
+        
+        with open(write_path +'/' + file_name, 'w') as outfile:
+            json.dump({'nodes': player_nodes}, outfile, indent=2)
+
+        s3_path = "player_nodes/" + file_name
         s3 = boto3.resource("s3")
         
-        s3.meta.client.upload_file(lambda_path, bucket_name, file_name)
+        s3.meta.client.upload_file(lambda_path, bucket_name, s3_path)
+        
         result = {
             'nodes' : player_nodes
         }
@@ -49,10 +58,3 @@ def handler(event, context):
 
 
 
-
-
-
-# app = Flask(__name__)
-# @app.route('/')
-# def hello_world():
-#     return 'Hello, Docker!'

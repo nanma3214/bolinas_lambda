@@ -41,8 +41,8 @@ localImage=raw:play
 aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 926340202285.dkr.ecr.us-east-2.amazonaws.com 
 ```   
 ```
-imageName=bolinas:api
-ecrImageTag=bolinasapi
+imageName=bolinas:parseevent
+ecrImageTag=bolinasparse
 repositoryName=playground
 
 docker tag  ${imageName} 926340202285.dkr.ecr.us-east-2.amazonaws.com/${repositoryName}:${ecrImageTag}
@@ -72,7 +72,7 @@ docker build -f Dockerfile -t raw:play .
 ```
 
 ```
-imageName=bolinas:api
+imageName=bolinas:parseevent
 
 docker build -f Dockerfile -t ${imageName} .
 docker run -p 9000:8080  ${imageName}
@@ -93,6 +93,30 @@ docker commit a898d2b9f1a4 bolinas:test
 
 ```
 
-interface.py
-libsp = cdll.LoadLibrary(absolute_path+"/build/liblsp.so")
+## Mapping template
+```
+{
+     "vphh": "$input.params('vphh')",
+     "visitor_cnts": "$input.params('visitor_cnts')",
+     "player_origin": "$input.params('player_origin')",
+     "player_destin": "$input.params('player_destin')",
+     "start_time": "$input.params('start_time')",
+     "end_time": "$input.params('end_time')"
+}
+```
 
+## Test template
+```
+{
+  "vphh": "1.5",
+  "visitor_cnts": "300",
+  "player_origin": "143",
+  "player_destin": "193",
+  "start_time": "100",
+  "end_time": "900"
+}
+```
+## Query string
+```
+vphh=1.5&visitor_cnts=300&player_origin=143&player_destin=193&start_time=100&end_time=900
+````
