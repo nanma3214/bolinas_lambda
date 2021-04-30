@@ -23,6 +23,7 @@ def handler(event, context):
         player_destin = int(event["player_destin"])
         start_time = int(event["start_time"])
         end_time = int(event["end_time"])
+        token = event["token"]
 
 
         run_traffic_simulation.run_traffic_simulation(vphh=vphh, visitor_cnts=visitor_cnts, write_path=write_path)
@@ -33,7 +34,7 @@ def handler(event, context):
                                              read_path=write_path)
 
         bucket_name = "bolinas"
-        file_name = 'player_nodes_{}_{}_{}_{}_{}_{}.json'.format(vphh, visitor_cnts, player_origin, player_destin, start_time, end_time)
+        file_name = 'player_nodes_{}.json'.format(token)
         lambda_path = write_path + '/' + file_name
         
         with open(write_path +'/' + file_name, 'w') as outfile:
@@ -45,6 +46,7 @@ def handler(event, context):
         s3.meta.client.upload_file(lambda_path, bucket_name, s3_path)
         
         result = {
+            'token': token,
             'nodes' : player_nodes
         }
         response = {
