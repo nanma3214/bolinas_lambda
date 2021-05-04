@@ -41,8 +41,8 @@ localImage=raw:play
 aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 926340202285.dkr.ecr.us-east-2.amazonaws.com 
 ```   
 ```
-imageName=bolinas:token
-ecrImageTag=bolinasToken
+imageName=runsim:v1
+ecrImageTag=runsimV1
 repositoryName=playground
 
 docker tag  ${imageName} 926340202285.dkr.ecr.us-east-2.amazonaws.com/${repositoryName}:${ecrImageTag}
@@ -72,7 +72,7 @@ docker build -f Dockerfile -t raw:play .
 ```
 
 ```
-imageName=bolinas:token
+imageName=runsim:v1
 
 docker build -f Dockerfile -t ${imageName} .
 docker run -p 9000:8080  ${imageName}
