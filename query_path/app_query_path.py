@@ -20,13 +20,17 @@ def handler(event, context):
 
         # Download files from S3
         bucket_name = "bolinas"
-        s3_prefix = "player_nodes/" + token
+        s3_prefix = "player_nodes/" + token + "/"
         client = boto3.client('s3')
         object_lists = client.list_objects(Bucket = bucket_name, Prefix=s3_prefix)
+
+        if 'Contents' not in object_lists:
+            raise Exception("Error: no such token.")
+
         path_list = {} # key = S3path, value = local /tmp path
         for file_info in object_lists['Contents']:
             this_s3_path = file_info['Key']
-            this_local_path = this_s3_path.replace(s3_prefix, '/tmp')
+            this_local_path = this_s3_path.replace(s3_prefix, '/tmp/')
             path_list[this_s3_path] = this_local_path
             Path(this_local_path).parent.mkdir(parents=True, exist_ok=True)
             client.download_file(Bucket = bucket_name, Key = this_s3_path, Filename = this_local_path)
