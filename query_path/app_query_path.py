@@ -46,13 +46,21 @@ def handler(event, context):
         increment = 5*60
         start_node = player_origin
         nodes_dict = {}
+        prev_time = None
         while start_node != player_destin:
-            nodes = query_path.query_path(vphh=vphh, visitor_cnts=visitor_cnts, 
+            nodes, nodes_time_traffic_arr = query_path.query_path(vphh=vphh, visitor_cnts=visitor_cnts, 
                                              player_origin=start_node, player_destin=player_destin, 
                                              start_time=start_time, end_time=start_time+increment,
                                              read_path=write_path)
-            nodes_dict[start_time] = nodes
+            fields = ['nodeID', 'time', 'traffic']
+            dicts = [dict(zip(fields, t)) for t in nodes_time_traffic_arr]
+            nodes_dict[start_time] = dicts
+            
+            if prev_time and prev_time in nodes_dict:
+                if dicts[0][fields[0]] != nodes_dict[prev_time][-1][fields[0]]:
+                    nodes_dict[prev_time].append(dicts[0])
             start_node = nodes[-1]
+            prev_time = start_time
             start_time += 300
 
         result = {
