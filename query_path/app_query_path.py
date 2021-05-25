@@ -52,7 +52,7 @@ def handler(event, context):
                                              player_origin=start_node, player_destin=player_destin, 
                                              start_time=start_time, end_time=start_time+increment,
                                              read_path=write_path)
-            fields = ['nodeID', 'time', 'traffic']
+            fields = ['nodeID', 'time', 'traffic', 'link_length']
             dicts = [dict(zip(fields, t)) for t in nodes_time_traffic_arr]
             nodes_dict[start_time] = dicts
             
