@@ -50,6 +50,7 @@ test_bolinas
 │   │   GET
 └─── store-ans (for Lambda function store-ans)
 │   │   POST
+│   │   OPTION (CORS enabled)
 └─── sync (outdated)
 │   │   GET
 ```
