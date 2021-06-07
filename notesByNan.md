@@ -52,20 +52,17 @@ docker push 926340202285.dkr.ecr.us-east-2.amazonaws.com/${repositoryName}:${ecr
 
 # Build Image
 ```
-$ cd /path/to/python-docker
+cd /path/to/python-docker
 
-$ pip3 install Flask
 pip3 install -Iv numpy==1.19.4
 pip3 install -Iv matplotlib==3.3.1
 pip3 install -Iv geopandas==0.8.1
 pip3 install scipy
-$ pip3 freeze > requirements.txt
-$ touch app.py
+
+pip3 freeze > requirements.txt
+touch app.py
 
 
-  - geopandas=0.8.1
-  - matplotlib=3.3.1
-  - numpy=1.19.4
 
 docker build -f Dockerfile -t raw:play .
 
