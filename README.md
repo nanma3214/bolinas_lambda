@@ -7,8 +7,6 @@ Integration of [Bolinas traffic simulation](https://github.com/cb-cities/spatial
 
 ![alt text](https://github.com/nanma3214/bolinas_lambda/blob/main/project_map.jpg?raw=true)
 
-&nbsp;
-
 
 ## In This Repository
 ```
