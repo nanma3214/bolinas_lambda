@@ -1,5 +1,5 @@
 # bolinas_lambda
-Integration of [Bolinas traffic simulation](https://github.com/cb-cities/spatial_queue/tree/master/projects/bolinas_civic) with AWS Lambda for the Bolinas Resilience game developed on Unity.
+Integration of [Bolinas traffic simulation](https://github.com/cb-cities/spatial_queue/tree/master/projects/bolinas_civic) with AWS Lambda for the [Bolinas Resilience - Wildfire Evacuation Simulation Game](https://tmaiorana.itch.io/bolinas-sim-game) developed on Unity.
 
 &nbsp;
 
